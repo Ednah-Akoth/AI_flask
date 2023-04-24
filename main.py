@@ -23,7 +23,7 @@ def predict_churn():
     print(features)
 
     # Make the prediction
-    prediction = model.predict(features)
+    prediction = model.predict(features).tolist()
 
     # Return the prediction as JSON
     return jsonify({'prediction': prediction})
