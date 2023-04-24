@@ -25,6 +25,11 @@ def predict_churn():
     # Make the prediction
     prediction = model.predict(features).tolist()
 
+    if prediction[0] == 0:
+        prediction = 'No'
+    if prediction[0] == 1:
+        prediction = 'Yes'
+
     # Return the prediction as JSON
     return jsonify({'prediction': prediction})
 
