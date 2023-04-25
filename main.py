@@ -3,13 +3,15 @@ import joblib
 import pandas as pd
 from flask_cors import CORS
 
+
+
 app = Flask(__name__)
-cors = CORS(app, resources={r"": {"origins": ""}})
+cors=CORS(app,resources={r"/*":{"origins":"*"}})
 
 @app.route("/")
-def index():
-    return "This is the intro page"
 
+def index():
+    return jsonify("This is the intro page")
 
 @app.route('/predict_churn', methods=['POST'])
 def predict_churn():
@@ -24,16 +26,15 @@ def predict_churn():
     print(features)
 
     # Make the prediction
-    prediction = model.predict(features).tolist()
-
-    if prediction[0] == 0:
-        prediction = 'No'
-    if prediction[0] == 1:
-        prediction = 'Yes'
+    prediction = model.predict(features)
+    if prediction[0]==0:
+        prediction="No"
+    if prediction[0]==1:
+        prediction="Yes"
 
     # Return the prediction as JSON
     return jsonify({'prediction': prediction})
 
-
-if __name__ == "__main__":
+if __name__=="__main__":
     app.run(debug=True)
+
